@@ -27,6 +27,41 @@ To deploy, you need to have your AWS account setup correctly:
 
 For more information, please see the [dnvriend/sbt-sam](https://github.com/dnvriend/sbt-sam) repository.
 
+## Using the example
+Posting a person:
+
+```
+$ http post https://q2irbnzbj5.execute-api.eu-west-1.amazonaws.com/dnvriend/person name=dennis age:=42 lucky_number:=10
+HTTP/1.1 200 OK
+{
+    "age": 42,
+    "id": "410a5de5-cfbf-45c6-9fb5-4571c3899568",
+    "lucky_number": 10,
+    "name": "dennis"
+}
+```
+
+Getting a person:
+
+```
+$ http https://q2irbnzbj5.execute-api.eu-west-1.amazonaws.com/dnvriend/person/1
+HTTP/1.1 404 Not Found
+{
+    "msg": "person with id '1' not found"
+}
+```
+
+```
+$ http post https://q2irbnzbj5.execute-api.eu-west-1.amazonaws.com/dnvriend/person name=dennis age:=42 lucky_number:=10
+HTTP/1.1 200 OK
+{
+    "age": 42,
+    "id": "1977c477-3dc0-4af0-b072-30b7454fc433",
+    "lucky_number": 10,
+    "name": "dennis"
+}
+```
+
 ## `AWS::DynamoDB::Table` resource configuration
 The seed `sam-component` uses Typesafe configuration to setup resources. This seed focuses on the combination
 of `AWS::Serverless::Function` that uses an `AWS::DynamoDB::Table` resource for its persistence requirements.
