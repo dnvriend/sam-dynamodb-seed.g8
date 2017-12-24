@@ -52,7 +52,7 @@ class PersonRepository(tableName: String, ctx: SamContext) {
 @HttpHandler(path = "/person", method = "post")
 class PostPerson extends ApiGatewayHandler {
   override def handle(request: HttpRequest, ctx: SamContext): HttpResponse = {
-    val repo = new PersonRepository("person", ctx)
+    val repo = new PersonRepository("people", ctx)
     val id: String = repo.id
     val person = request.bodyOpt[Person].get
     repo.put(id, person)
@@ -63,7 +63,7 @@ class PostPerson extends ApiGatewayHandler {
 @HttpHandler(path = "/person", method = "get")
 class GetListOfPerson extends ApiGatewayHandler {
   override def handle(request: HttpRequest, ctx: SamContext): HttpResponse = {
-    val repo = new PersonRepository("person", ctx)
+    val repo = new PersonRepository("people", ctx)
     HttpResponse.ok.withBody(Json.toJson(repo.list))
   }
 }
@@ -71,7 +71,7 @@ class GetListOfPerson extends ApiGatewayHandler {
 @HttpHandler(path = "/person/{id}", method = "get")
 class GetPerson extends ApiGatewayHandler {
   override def handle(request: HttpRequest, ctx: SamContext): HttpResponse = {
-    val repo = new PersonRepository("person", ctx)
+    val repo = new PersonRepository("people", ctx)
     request.pathParamsOpt[Map[String, String]].getOrElse(Map.empty).get("id")
       .fold(HttpResponse.notFound.withBody(Json.toJson("Person not found")))(id => {
         HttpResponse.ok.withBody(Json.toJson(repo.get(id)))
