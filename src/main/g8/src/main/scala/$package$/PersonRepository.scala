@@ -27,7 +27,7 @@ class ReadPerson extends JsonRepositoryApiGatewayHandler[Person]("people") {
   override def handle(person: Option[Person], repo: JsonRepository, request: HttpRequest, ctx: SamContext): HttpResponse = {
     request.pathParamsOpt[Map[String, String]].getOrElse(Map.empty).get("id")
       .fold(HttpResponse.notFound.withBody(Json.toJson("No id found in path")))(id => {
-        repo.find[Person](id).fold(HttpResponse.validationError.withBody(Json.toJson(s"No person for id '$id'"))) { person =>
+        repo.find[Person](id).fold(HttpResponse.validationError.withBody(Json.toJson("No person for id " + id))) { person =>
           HttpResponse.ok.withBody(Json.toJson(person))
         }
       })
