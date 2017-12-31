@@ -7,5 +7,7 @@ lazy val `$name$` = (project in file("."))
     libraryDependencies += "com.amazonaws" % "aws-java-sdk-dynamodb" % "1.11.255",
     resolvers += Resolver.bintrayRepo("dnvriend", "maven"),
     scalaVersion := "2.12.4",
-    samStage := "dnvriend"
+    samStage := "$stage$",
+    organization := "$organization$",
+    description := "simple sam component with dynamodb"
   )
